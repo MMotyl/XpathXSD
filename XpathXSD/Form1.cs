@@ -20,7 +20,8 @@ namespace XpathXSD
         public Form1()
         {
             InitializeComponent();
-            dd.Checked = true;            
+            dd.Checked = true;
+            verLabel.Text = typeof(Program).Assembly.GetName().Version.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)

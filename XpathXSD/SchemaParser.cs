@@ -120,7 +120,7 @@ namespace XpathXSD
                 drillDown = true;
 
                 GetComplexTypes(@"/xs:schema/xs:complexType", elementTypes.ComplexType);
-                //GetComplexTypes(@"/xs:schema/xs:simpleType", elementTypes.SimpleType);
+
             }
 
             catch (Exception e)
@@ -292,6 +292,10 @@ namespace XpathXSD
         {
             ElementType element = null;
             string Name = getType(node, "type");
+            int pos = Name.IndexOf(':');
+            if (pos != -1)
+                Name = Name.Substring(++pos);
+
             element = elementList.Find(x => ((x.name == Name) &&(x.Type ==elementTypes.ComplexType )));
 
             return element; //jeśli uda się znaleźć - należy użyć elementu do kolejnego wyszukania.
