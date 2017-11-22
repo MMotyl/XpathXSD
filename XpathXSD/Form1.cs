@@ -31,9 +31,13 @@ namespace XpathXSD
             if (File.Exists(OFD.FileName))
             {
                 textBox1.Text = OFD.FileName;
-                sp2 = new SchemaParser( OFD.FileName);
-                s2t = new SchemaParserToTree(XMLTree, sp2);
-                s2t.GetElements();
+                reload_Click(sender, e);
+                //sp2 = new SchemaParser( OFD.FileName);
+                //s2t = new SchemaParserToTree(XMLTree, sp2);
+                //sp2.drillDown = dd.Checked;
+                //sp2.AddRoot = addRoot.Checked;
+                //sp2.Doc = doc.Checked;
+                //s2t.GetElements();
             }
         }
 
@@ -51,6 +55,44 @@ namespace XpathXSD
         {
             CheckBox cb = (CheckBox)sender;
             sp2.drillDown = cb.Checked;
+        }
+
+        private void reload_Click(object sender, EventArgs e)
+        {
+            sp2 = new SchemaParser(OFD.FileName);
+            s2t = new SchemaParserToTree(XMLTree, sp2);
+            sp2.drillDown = dd.Checked;
+            sp2.AddRoot = addRoot.Checked;
+            sp2.Occures = occurs_det.Checked;
+            s2t.GetElements();
+        }
+
+        private void addRoot_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox ro = (CheckBox)sender;
+            sp2.AddRoot = ro.Checked;
+        }
+
+        private void doc_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox docc = (CheckBox)sender;
+            sp2.Doc = docc.Checked;
+        }
+
+        private void occurs_det_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox occ = (CheckBox)sender;
+            sp2.Occures = occ.Checked;
+        }
+
+        private void XMLOutput_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string txt = XMLOutput.Text.ToString();
+                Clipboard.SetText(txt);
+            }
+            catch (Exception ex) { }
         }
     }
 }

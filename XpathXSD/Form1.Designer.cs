@@ -32,6 +32,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.reload = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.XMLTree = new System.Windows.Forms.TreeView();
             this.OFD = new System.Windows.Forms.OpenFileDialog();
@@ -42,6 +43,9 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.XMLOutput = new System.Windows.Forms.TextBox();
             this.XMLtxt = new System.Windows.Forms.TextBox();
+            this.addRoot = new System.Windows.Forms.CheckBox();
+            this.doc = new System.Windows.Forms.CheckBox();
+            this.occurs_det = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -56,7 +60,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(39, 10);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(872, 22);
+            this.textBox1.Size = new System.Drawing.Size(763, 22);
             this.textBox1.TabIndex = 1;
             // 
             // label1
@@ -72,21 +76,34 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.reload);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(999, 46);
+            this.panel1.Size = new System.Drawing.Size(1021, 46);
             this.panel1.TabIndex = 3;
+            // 
+            // reload
+            // 
+            this.reload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.reload.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.reload.Location = new System.Drawing.Point(906, 5);
+            this.reload.Name = "reload";
+            this.reload.Size = new System.Drawing.Size(108, 33);
+            this.reload.TabIndex = 4;
+            this.reload.Text = "reload";
+            this.reload.UseVisualStyleBackColor = true;
+            this.reload.Click += new System.EventHandler(this.reload_Click);
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(917, 5);
+            this.button1.Location = new System.Drawing.Point(808, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 33);
+            this.button1.Size = new System.Drawing.Size(92, 33);
             this.button1.TabIndex = 3;
             this.button1.Text = "plik";
             this.button1.UseVisualStyleBackColor = true;
@@ -96,9 +113,9 @@
             // 
             this.XMLTree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.XMLTree.Location = new System.Drawing.Point(12, 102);
+            this.XMLTree.Location = new System.Drawing.Point(12, 127);
             this.XMLTree.Name = "XMLTree";
-            this.XMLTree.Size = new System.Drawing.Size(297, 440);
+            this.XMLTree.Size = new System.Drawing.Size(297, 415);
             this.XMLTree.TabIndex = 4;
             this.XMLTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.XMLTree_AfterSelect);
             // 
@@ -129,7 +146,7 @@
             this.verLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 545);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1016, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1038, 25);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -162,7 +179,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.XMLtxt);
-            this.splitContainer1.Size = new System.Drawing.Size(696, 478);
+            this.splitContainer1.Size = new System.Drawing.Size(718, 478);
             this.splitContainer1.SplitterDistance = 300;
             this.splitContainer1.TabIndex = 9;
             // 
@@ -171,13 +188,17 @@
             this.XMLOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.XMLOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.XMLOutput.Cursor = System.Windows.Forms.Cursors.No;
             this.XMLOutput.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.XMLOutput.Location = new System.Drawing.Point(3, 3);
             this.XMLOutput.Multiline = true;
             this.XMLOutput.Name = "XMLOutput";
+            this.XMLOutput.ReadOnly = true;
             this.XMLOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.XMLOutput.Size = new System.Drawing.Size(690, 294);
+            this.XMLOutput.Size = new System.Drawing.Size(712, 294);
             this.XMLOutput.TabIndex = 6;
+            this.XMLOutput.DoubleClick += new System.EventHandler(this.XMLOutput_DoubleClick);
             // 
             // XMLtxt
             // 
@@ -189,14 +210,56 @@
             this.XMLtxt.Multiline = true;
             this.XMLtxt.Name = "XMLtxt";
             this.XMLtxt.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.XMLtxt.Size = new System.Drawing.Size(696, 168);
+            this.XMLtxt.Size = new System.Drawing.Size(718, 168);
             this.XMLtxt.TabIndex = 7;
+            // 
+            // addRoot
+            // 
+            this.addRoot.AutoSize = true;
+            this.addRoot.Checked = true;
+            this.addRoot.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.addRoot.Location = new System.Drawing.Point(12, 96);
+            this.addRoot.Name = "addRoot";
+            this.addRoot.Size = new System.Drawing.Size(84, 21);
+            this.addRoot.TabIndex = 10;
+            this.addRoot.Text = global::XpathXSD.Properties.Settings.Default.AddRoot;
+            this.addRoot.UseVisualStyleBackColor = true;
+            this.addRoot.CheckedChanged += new System.EventHandler(this.addRoot_CheckedChanged);
+            // 
+            // doc
+            // 
+            this.doc.AutoSize = true;
+            this.doc.Checked = true;
+            this.doc.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.doc.Location = new System.Drawing.Point(129, 69);
+            this.doc.Name = "doc";
+            this.doc.Size = new System.Drawing.Size(55, 21);
+            this.doc.TabIndex = 11;
+            this.doc.Text = "Doc";
+            this.doc.UseVisualStyleBackColor = true;
+            this.doc.CheckedChanged += new System.EventHandler(this.doc_CheckedChanged);
+            // 
+            // occurs_det
+            // 
+            this.occurs_det.AutoSize = true;
+            this.occurs_det.Checked = true;
+            this.occurs_det.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.occurs_det.Location = new System.Drawing.Point(129, 96);
+            this.occurs_det.Name = "occurs_det";
+            this.occurs_det.Size = new System.Drawing.Size(87, 21);
+            this.occurs_det.TabIndex = 12;
+            this.occurs_det.Text = "krotności";
+            this.occurs_det.UseVisualStyleBackColor = true;
+            this.occurs_det.CheckedChanged += new System.EventHandler(this.occurs_det_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 570);
+            this.ClientSize = new System.Drawing.Size(1038, 570);
+            this.Controls.Add(this.occurs_det);
+            this.Controls.Add(this.doc);
+            this.Controls.Add(this.addRoot);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dd);
@@ -235,6 +298,10 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox XMLOutput;
         private System.Windows.Forms.TextBox XMLtxt;
+        private System.Windows.Forms.CheckBox addRoot;
+        private System.Windows.Forms.Button reload;
+        private System.Windows.Forms.CheckBox doc;
+        private System.Windows.Forms.CheckBox occurs_det;
     }
 }
 

@@ -18,6 +18,7 @@ namespace XpathXSD
         public XmlNode innerXML;
         public elementTypes Type ;
         public TreeNode treeNode = null;
+        //public string comment; 
     }
 
     class SchemaParserToTree
@@ -65,6 +66,31 @@ namespace XpathXSD
         }
     }
 
+    /// <summary>
+    /// zawiera pojedynczy wiesz wyniku. 
+    /// </summary>
+    class parseLine
+    {
+        public string path;
+        public string comment;
+        public string restriction;
+        public string dataType;
+    }
+
+    class parseResult
+    { 
+        private ArrayList result;
+        public parseResult()
+        {
+            result = new ArrayList();
+        }
+
+        public parseLine this[int index] => ((parseLine)result[index]);
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+    }
 
     class SchemaParser
     {
@@ -102,9 +128,17 @@ namespace XpathXSD
         XmlNamespaceManager NameSpace;
         XmlNode root;
         bool _drillDown;
+        bool _addRoot;
+        bool _doc;
+        bool _occures;
 
  
         public List<ElementType> elementList = new List<ElementType>();
+
+        public void Append(string FilenName)
+        {
+            // to append new file.
+        }
 
         public SchemaParser(string FileName)
         {
@@ -118,6 +152,7 @@ namespace XpathXSD
                 XmlDoc.Load(file);
                 root = XmlDoc.DocumentElement;
                 drillDown = true;
+                AddRoot = true;
 
                 GetComplexTypes(@"/xs:schema/xs:complexType", elementTypes.ComplexType);
 
@@ -137,6 +172,9 @@ namespace XpathXSD
             { _drillDown = value; }
         }
 
+        public bool AddRoot { get => _addRoot; set => _addRoot = value; }
+        public bool Doc { get => _doc; set => _doc = value; }
+        public bool Occures { get => _occures; set => _occures = value; }
 
         public string parseElement(string Name)
         {
@@ -157,6 +195,10 @@ namespace XpathXSD
             ArrayList rek = new ArrayList();
 
             string res = Parse(element.innerXML, 0, rek);
+            if (AddRoot)
+            {
+                res = addPrefix(res, '/'+ element.name);
+            }
             return res;
         }
 
@@ -173,6 +215,9 @@ namespace XpathXSD
             string name;
             string sub;
             string multi;
+            string min;
+            string max_occur;
+            string min_occur;
             string prefix;
             ElementType typZlozony;
 
@@ -186,13 +231,37 @@ namespace XpathXSD
             {
                 typZlozony = null;
                 name = getType(element, "name");
-                Console.WriteLine(name);
+                Console.WriteLine("analyzing {0} ",name);
                 if (name != "")
                 {
                     multi = getType(element, "maxOccurs");
-                    if (multi == "unbounded")
+                    if (multi != "")
                     {
-                        name += "[]";
+                        if (multi == "unbounded")
+                        {
+                            max_occur = "n";
+                        }
+                        else
+                        {
+                            max_occur = ""+multi;
+                        }
+
+                        min = getType(element, "minOccurs");
+                        switch (min)
+                        {
+                            case "0" : min_occur = "0"; break;
+                            case ""  : min_occur = "1"; break;
+                            default : min_occur = min; break;
+                        }
+
+                        if (Occures)
+                        {
+                            name += String.Format("[{0}..{1}]",min_occur, max_occur);
+                        }
+                        else
+                        {
+                            name += "[]";
+                        }
                     }
 
                     result += "/" + name;
@@ -209,7 +278,7 @@ namespace XpathXSD
                         if (drillDown)
                         {
 
-                            sub = Parse(typZlozony.innerXML, ++level, rekurencja);
+                            sub = Parse(typZlozony.innerXML, level+1, rekurencja);
                             Console.WriteLine("SUBName " + name);
                             Console.WriteLine("Sub contet " + sub);
                             if (name != "" && !name.StartsWith("/"))
@@ -241,23 +310,29 @@ namespace XpathXSD
                 }
                     if (element.HasChildNodes)
                     {
-                        if (getType(node, "xs:annotation") == "")
+                    if (getType(node, "xs:annotation") == "")
+                    {
+                        sub = Parse(element, level, rekurencja);
+                        if (sub != "")
                         {
-                            sub = Parse(element, level, rekurencja); 
-                            if (sub != "") 
-                            {
                             if (name != "" && !name.StartsWith("/"))
                             {
-                                name = "/"+name;
+                                name = "/" + name;
                             }
 
-                                prefix = addPrefix(sub, name);
-                                if (!prefix.StartsWith("/"))
-                                {
-                                    prefix += "/";
-                                }
-                                result += prefix; 
+                            prefix = addPrefix(sub, name);
+                            if (!prefix.StartsWith("/"))
+                            {
+                                prefix += "/";
                             }
+                            result += prefix;
+                        }
+                    }
+                    if (element.Name =="xs:annotation")
+                        {
+                          // documentation
+                           string comment = element.InnerText.ToString();
+                           Console.WriteLine("Comment " + comment);
                         }
                     }
                 }

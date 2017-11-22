@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XpathXSD.XMLFormat">
+    <Position X="3.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XpathXSD.SchemaParserToTree">
+    <Position X="3.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>SchemaParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XpathXSD.SchemaParser">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="XpathXSD.SchemaParser.ReqRec" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SchemaParser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAEACEAQAAAAgQQAACQAgAQAQDwAAAAAACAA=</HashCode>
+      <FileName>SchemaParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
