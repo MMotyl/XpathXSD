@@ -154,7 +154,7 @@ namespace XpathXSD
                 drillDown = true;
                 AddRoot = true;
 
-                GetComplexTypes(@"/xs:schema/xs:complexType", elementTypes.ComplexType);
+                GetComplexTypes(@"//xs:schema/xs:complexType", elementTypes.ComplexType);
 
             }
 
